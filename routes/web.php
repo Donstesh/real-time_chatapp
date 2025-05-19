@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Events\MessageSent;
+use Spatie\Prometheus\Http\Controllers\MetricsController;
+
+
+Route::get('/metrics', [MetricsController::class, 'index'])
+    ->middleware(Spatie\Prometheus\Http\Middleware\AllowIps::class);
 //test if broadcast is working 
 Route::get('/test-event', function () {
     broadcast(new MessageSent(auth()->user(), 'Hello from test!'))->toOthers();
